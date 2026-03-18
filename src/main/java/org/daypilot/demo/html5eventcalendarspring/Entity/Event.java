@@ -1,4 +1,4 @@
-package org.daypilot.demo.html5eventcalendarspring.domain;
+package org.daypilot.demo.html5eventcalendarspring.Entity;
 
 import jakarta.persistence.*;
 

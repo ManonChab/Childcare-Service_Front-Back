@@ -3,7 +3,8 @@ package org.daypilot.demo.html5eventcalendarspring.controller;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import org.daypilot.demo.html5eventcalendarspring.domain.Event;
+
+import org.daypilot.demo.html5eventcalendarspring.Entity.Event;
 import org.daypilot.demo.html5eventcalendarspring.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,7 +15,7 @@ import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 
 @RestController
-public class MainController {
+public class CalendarController {
 
     @Autowired
     EventRepository er;
@@ -34,17 +35,19 @@ public class MainController {
     @PostMapping("/api/events/create")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
-    Event createEvent(@RequestBody EventCreateParams params) {
+    public Event createEvent(@RequestBody EventCreateParams params) {
 
-        Event e = new Event();
-        e.setStart(params.start);
-        e.setEnd(params.end);
-        e.setText(params.text);
+    validateSlot(params.start, params.end, null);
 
-        er.save(e);
+    Event e = new Event();
+    e.setStart(params.start);
+    e.setEnd(params.end);
+    e.setText(params.text);
 
-        return e;
-    }
+    er.save(e);
+
+    return e;
+}
 
     @PostMapping("/api/events/move")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -92,5 +95,55 @@ public class MainController {
         public String color;
     }
 
+    @PostMapping("/api/events/update")
+@Transactional
+public Event updateEvent(@RequestBody EventUpdateParams params) {
+
+    Event e = er.findById(params.id)
+        .orElseThrow(() -> new RuntimeException("Event not found"));
+
+    validateSlot(params.start, params.end, params.id);
+
+    e.setText(params.text);
+    e.setStart(params.start);
+    e.setEnd(params.end);
+
+    er.save(e);
+
+    return e;
+}
+
+private void validateSlot(LocalDateTime start, LocalDateTime end, Long excludeId) {
+
+    // Rule 1: End must be after start
+    if (end.isBefore(start) || end.equals(start)) {
+        throw new RuntimeException("End must be after start");
+    }
+
+    // Rule 2: No past bookings
+    if (start.isBefore(LocalDateTime.now())) {
+        throw new RuntimeException("Cannot create slot in the past");
+    }
+
+    // Rule 3: No overlap
+    boolean overlaps = er.existsOverlapping(start, end, excludeId);
+
+    if (overlaps) {
+        throw new RuntimeException("Slot overlaps with an existing one");
+    }
+}
+
+public static class EventUpdateParams {
+    public Long id;
+    public LocalDateTime start;
+    public LocalDateTime end;
+    public String text;
+}
+
+@DeleteMapping("/api/events/{id}")
+@Transactional
+public void deleteEvent(@PathVariable Long id) {
+    er.deleteById(id);
+}
 
 }
