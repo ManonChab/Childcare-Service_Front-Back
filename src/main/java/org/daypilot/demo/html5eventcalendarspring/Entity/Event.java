@@ -1,16 +1,23 @@
 package org.daypilot.demo.html5eventcalendarspring.Entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Data
 @Entity
 public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     Long id;
 
+    @Column(name = "text")
     String text;
 
     @Column(name = "event_start")
@@ -19,45 +26,15 @@ public class Event {
     @Column(name = "event_end")
     LocalDateTime end;
 
+    @Column(name = "color")
     String color;
 
-    public Long getId() {
-        return id;
-    }
+@ManyToOne
+@JoinColumn(name = "user_id")
+    User user;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public LocalDateTime getStart() {
-        return start;
-    }
-
-    public void setStart(LocalDateTime start) {
-        this.start = start;
-    }
-
-    public LocalDateTime getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalDateTime end) {
-        this.end = end;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
+@ManyToMany
+@JsonIgnore
+@JoinTable(name = "event_child", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "child_id"))
+    List<Child> children;
 }

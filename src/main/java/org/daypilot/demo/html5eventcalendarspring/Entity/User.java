@@ -1,10 +1,16 @@
 package org.daypilot.demo.html5eventcalendarspring.Entity;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -32,11 +38,6 @@ public class User {
     @Size(min = 2, max = 50, message = "Last name must be between 2 and 50 characters")
     private String lastName;
 
-    @NotBlank(message = "Username cannot be empty")
-    @Size(min = 3, max = 50, message = "Username must be between 3 and 50 characters")
-    @Column(name="user_name", unique = true, nullable = false, length = 50)
-    private String userName;
-
     @NotBlank(message = "Password cannot be empty")
     @Size(min = 6, max = 200, message = "Password must be between 6 and 200 characters")
     @Column(nullable = false)
@@ -51,12 +52,14 @@ public class User {
     private String adress;
 
     @Column(nullable = false)
-    private int children_id;
-
-    @Column
-    private int event_id;
-
-    @Column(nullable = false)
     private String color;
+
+    @JsonIgnore
+    @OneToMany(mappedBy="user", cascade= CascadeType.ALL)
+    private List<Child> children;
+
+    @JsonIgnore
+    @OneToMany(mappedBy="user", cascade= CascadeType.ALL)
+    private List<Event> events;
 
 }

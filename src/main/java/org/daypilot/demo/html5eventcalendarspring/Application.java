@@ -2,8 +2,6 @@ package org.daypilot.demo.html5eventcalendarspring;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import io.github.cdimascio.dotenv.Dotenv;
 

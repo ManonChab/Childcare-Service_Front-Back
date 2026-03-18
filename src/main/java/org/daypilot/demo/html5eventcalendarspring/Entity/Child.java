@@ -1,10 +1,15 @@
 package org.daypilot.demo.html5eventcalendarspring.Entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -13,11 +18,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "users")
+@Table(name = "child")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Children {
+public class Child {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -38,4 +43,12 @@ public class Children {
     @Column(name="info")
     private String information;
 
+    @ManyToMany(mappedBy = "children")
+    List<Event> events;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
+
 }
+    
