@@ -26,15 +26,16 @@ public class Event {
     @Column(name = "event_end")
     LocalDateTime end;
 
-    @Column(name = "color")
-    String color;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    EventStatus status;
 
-@ManyToOne
+@ManyToOne(fetch = FetchType.EAGER)
 @JoinColumn(name = "user_id")
     User user;
 
-@ManyToMany
-@JsonIgnore
-@JoinTable(name = "event_child", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "child_id"))
-    List<Child> children;
+// @ManyToMany
+// @JsonIgnore
+// @JoinTable(name = "event_child", joinColumns = @JoinColumn(name = "event_id"), inverseJoinColumns = @JoinColumn(name = "child_id"))
+//     List<Child> children;
 }

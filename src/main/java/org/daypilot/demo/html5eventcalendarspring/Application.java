@@ -9,6 +9,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class Application {
 
     public static void main(String[] args) {
+        
         // Load .env before Spring reads properties
         Dotenv dotenv = Dotenv.configure()
                                .ignoreIfMissing()  // optional, in case .env is not present
@@ -17,7 +18,7 @@ public class Application {
         // Set environment variables programmatically
         System.setProperty("DB_USER", dotenv.get("DB_USER"));
         System.setProperty("DB_PASS", dotenv.get("DB_PASS"));
-
+        
         SpringApplication.run(Application.class, args);
     }
 }

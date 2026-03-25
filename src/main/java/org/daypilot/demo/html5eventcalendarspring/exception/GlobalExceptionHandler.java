@@ -30,11 +30,11 @@ public class GlobalExceptionHandler {
         ErrorInfo error = new ErrorInfo(400, "Error in data validation", details, LocalDateTime.now());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
-    @ExceptionHandler(NoResourceFoundException.class)
-    public ResponseEntity<ErrorInfo> notFoundError(NoResourceFoundException e) {
-        ErrorInfo body = new ErrorInfo(404, "Not found: " + e.getMessage());
-        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
-    }
+    // @ExceptionHandler(NoResourceFoundException.class)
+    // public ResponseEntity<ErrorInfo> notFoundError(NoResourceFoundException e) {
+    //     ErrorInfo body = new ErrorInfo(404, "Not found: " + e.getMessage());
+    //     return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    // }
 
     @ExceptionHandler(FileException.class)
     public ResponseEntity<ErrorInfo> fileError (FileException e){

@@ -1,5 +1,6 @@
 package org.daypilot.demo.html5eventcalendarspring.Entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,10 +31,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotBlank(message = "Name cannot be empty")
-    @Column(name="name", nullable = false)
+    @NotBlank(message = "first_name cannot be empty")
+    @Column(name="firstName", nullable = false)
     @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
-    private String name;
+    private String firstName;
 
     @NotBlank(message = "LastName cannot be empty")
     @Column(name="last_name", nullable = false)
@@ -44,22 +47,28 @@ public class User {
     private String password;
 
     @NotBlank(message = "Email cannot be empty")
-    @Column(unique = true, nullable = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Column(nullable = false)
-    @Size(max = 150, message = "Adress must not exceed 150 characters")
-    private String adress;
+    @Size(max = 150, message = "Address must not exceed 150 characters")
+    private String address;
+
+    @Column(nullable = false)
+    private String phone;
 
     @Column(nullable = false)
     private String color;
 
     @JsonIgnore
-    @OneToMany(mappedBy="user", cascade= CascadeType.ALL)
-    private List<Child> children;
+    // @OneToMany(mappedBy="user", cascade= CascadeType.ALL)
+    private Integer childrenCount;
 
     @JsonIgnore
     @OneToMany(mappedBy="user", cascade= CascadeType.ALL)
-    private List<Event> events;
+    private List<Event> events = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
 }

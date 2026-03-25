@@ -28,4 +28,12 @@ public interface EventRepository extends CrudRepository<Event, Long>{
 		@Param("end") LocalDateTime end,
 		@Param("excludeId") Long excludeId
 	);
+
+	@Query("""
+	SELECT e FROM Event e
+	WHERE e.start < :end
+	AND e.end > :start
+	""")
+	List<Event> findOverlapping(LocalDateTime start, LocalDateTime end);
+
 }
