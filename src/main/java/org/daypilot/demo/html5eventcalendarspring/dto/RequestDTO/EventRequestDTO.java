@@ -5,10 +5,13 @@ import java.util.List;
 
 import org.daypilot.demo.html5eventcalendarspring.Entity.User;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public record EventRequestDTO(
     String text,
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
     LocalDateTime start,
-    LocalDateTime end
-) {
-
-}
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
+    LocalDateTime end,
+    Integer userId
+) {}

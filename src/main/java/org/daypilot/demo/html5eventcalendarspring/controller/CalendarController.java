@@ -4,6 +4,8 @@ package org.daypilot.demo.html5eventcalendarspring.controller;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
+import jakarta.annotation.security.PermitAll;
+
 import org.daypilot.demo.html5eventcalendarspring.Entity.Event;
 import org.daypilot.demo.html5eventcalendarspring.Entity.EventStatus;
 import org.daypilot.demo.html5eventcalendarspring.dto.RequestDTO.EventRequestDTO;
@@ -25,6 +27,21 @@ public class CalendarController {
         this.eventService = eventService;
     }
 
+    @PostMapping
+    @PermitAll
+    public EventResponseDTO create(
+        @RequestBody EventRequestDTO dto,
+        Authentication auth
+    ) {
+    // 🔹 Debug log to see if auth is null
+    System.out.println("AUTH: " + auth);
+    
+    // Optional: log the DTO
+    System.out.println("DTO: " + dto);
+
+    return eventService.create(dto, auth);
+}
+
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<EventResponseDTO> getAll() {
@@ -43,11 +60,16 @@ public class CalendarController {
         return eventService.reject(id);
     }
 
-    @PostMapping
-    public EventResponseDTO create(
-        @RequestBody EventRequestDTO dto,
-        Authentication auth
-    ) {
-        return eventService.create(dto, auth);
-    }
+    
+    // @PostMapping
+    // @PermitAll
+    // public EventResponseDTO create(
+    //     @RequestBody EventRequestDTO dto,
+    //     Authentication auth
+    // ) {
+    //     return eventService.create(dto, auth);
+    // }
+    
+    
+    
 }

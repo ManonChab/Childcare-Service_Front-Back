@@ -13,11 +13,14 @@ public interface EventMapper {
 
     Event toEntity (EventRequestDTO dto);
 
+    
+
     default EventResponseDTO toResponseDTO(Event event) {
         UserBasicDTO userDto = null;
         if (event.getUser() != null) {
             userDto = new UserBasicDTO(event.getUser().getId(), event.getUser().getFirstName());
         }
+        
 
         String status = event.getStatus() != null ? event.getStatus().name() : "UNKNOWN";
         return new EventResponseDTO(
@@ -28,8 +31,12 @@ public interface EventMapper {
             status,
             userDto
         );
+        
     }
+    
 
     UserBasicDTO toUserSummaryDTO(User user);
 
 }
+
+
