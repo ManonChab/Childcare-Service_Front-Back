@@ -12,6 +12,8 @@ import org.daypilot.demo.html5eventcalendarspring.dto.RequestDTO.EventRequestDTO
 import org.daypilot.demo.html5eventcalendarspring.dto.ResponseDTO.EventResponseDTO;
 import org.daypilot.demo.html5eventcalendarspring.repository.EventRepository;
 import org.daypilot.demo.html5eventcalendarspring.service.EventService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +43,12 @@ public class CalendarController {
 
     return eventService.create(dto, auth);
 }
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteEvent(@PathVariable Long id) {
+        eventService.deleteEvent(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping

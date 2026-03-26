@@ -11,6 +11,8 @@ public interface EventService {
 
     public List<EventResponseDTO> getAllEvents();
 
+    public void deleteEvent(Long id);
+
     public Event approve(Long id);
 
     public Event reject(Long id);

@@ -2,6 +2,7 @@ package org.daypilot.demo.html5eventcalendarspring.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 import org.daypilot.demo.html5eventcalendarspring.Entity.Event;
@@ -85,6 +86,14 @@ public EventResponseDTO create(EventRequestDTO dto, Authentication auth) {
     Event savedEvent = er.save(event);
     return mapper.toResponseDTO(savedEvent);
 }
+
+    @Override
+    public void deleteEvent(Long id) {
+        Optional <Event> optionalEvent = er.findById(id);
+        if (optionalEvent.isEmpty())
+            throw new RuntimeException("The slot does not exist");
+        er.delete(optionalEvent.get());
+    }
 
 }
 

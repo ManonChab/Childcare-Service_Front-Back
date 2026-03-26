@@ -69,7 +69,6 @@ public class UserServiceImpl implements UserService {
         user.setLastName(userDTO.getLastName());
         user.setAddress(userDTO.getAddress());
         user.setPhone(userDTO.getPhone());
-        user.setChildrenCount(userDTO.getChildrenCount());
         User savedUser = userRepository.save(user);
 
         return userMapper.toResponseDTO(savedUser);
