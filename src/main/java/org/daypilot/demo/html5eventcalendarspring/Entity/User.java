@@ -57,10 +57,6 @@ public class User {
     @Column(nullable = false)
     private String phone;
 
-    // @JsonIgnore
-    // // @OneToMany(mappedBy="user", cascade= CascadeType.ALL)
-    // private Integer childrenCount;
-
     @JsonIgnore
     @OneToMany(mappedBy="user", cascade= CascadeType.ALL)
     private List<Event> events = new ArrayList<>();

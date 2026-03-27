@@ -3,8 +3,6 @@ package org.daypilot.demo.html5eventcalendarspring.controller;
 import java.util.List;
 
 import org.daypilot.demo.html5eventcalendarspring.Entity.Review;
-import org.daypilot.demo.html5eventcalendarspring.dto.RequestDTO.UserRequestDTO;
-import org.daypilot.demo.html5eventcalendarspring.dto.ResponseDTO.UserResponseDTO;
 import org.daypilot.demo.html5eventcalendarspring.service.ReviewService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

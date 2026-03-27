@@ -1,16 +1,12 @@
 
 package org.daypilot.demo.html5eventcalendarspring.controller;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import jakarta.annotation.security.PermitAll;
 
 import org.daypilot.demo.html5eventcalendarspring.Entity.Event;
-import org.daypilot.demo.html5eventcalendarspring.Entity.EventStatus;
 import org.daypilot.demo.html5eventcalendarspring.dto.RequestDTO.EventRequestDTO;
 import org.daypilot.demo.html5eventcalendarspring.dto.ResponseDTO.EventResponseDTO;
-import org.daypilot.demo.html5eventcalendarspring.repository.EventRepository;
 import org.daypilot.demo.html5eventcalendarspring.service.EventService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,11 +31,6 @@ public class CalendarController {
         @RequestBody EventRequestDTO dto,
         Authentication auth
     ) {
-    // 🔹 Debug log to see if auth is null
-    System.out.println("AUTH: " + auth);
-    
-    // Optional: log the DTO
-    System.out.println("DTO: " + dto);
 
     return eventService.create(dto, auth);
 }
@@ -68,16 +59,4 @@ public class CalendarController {
         return eventService.reject(id);
     }
 
-    
-    // @PostMapping
-    // @PermitAll
-    // public EventResponseDTO create(
-    //     @RequestBody EventRequestDTO dto,
-    //     Authentication auth
-    // ) {
-    //     return eventService.create(dto, auth);
-    // }
-    
-    
-    
 }

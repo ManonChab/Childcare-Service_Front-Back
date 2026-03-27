@@ -1,9 +1,7 @@
 package org.daypilot.demo.html5eventcalendarspring.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 import org.daypilot.demo.html5eventcalendarspring.Entity.Event;
 import org.daypilot.demo.html5eventcalendarspring.Entity.EventStatus;
@@ -59,19 +57,16 @@ public class EventServiceImpl implements EventService {
 public EventResponseDTO create(EventRequestDTO dto, Authentication auth) {
     User user;
 
-    // SAFE: do NOT call auth.getName() if auth is null
     if (auth != null) {
         try {
             String email = auth.getName(); 
             user = userRepository.findByEmail(email)
                     .orElseThrow(() -> new RuntimeException("User not found"));
         } catch (Exception e) {
-            // fallback if something goes wrong
             user = userRepository.findById(dto.userId() != null ? dto.userId() : 1)
                     .orElseThrow(() -> new RuntimeException("User not found"));
         }
     } else {
-        // TEMPORARY fallback: no auth provided
         user = userRepository.findById(dto.userId() != null ? dto.userId() : 1)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }

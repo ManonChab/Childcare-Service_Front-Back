@@ -1,8 +1,5 @@
 package org.daypilot.demo.html5eventcalendarspring.dto.RequestDTO;
 
-import java.util.List;
-
-import org.daypilot.demo.html5eventcalendarspring.Entity.Event;
 
 public class UserRequestDTO {
 
@@ -30,7 +27,6 @@ public class UserRequestDTO {
         this.childrenCount = childrenCount;
     }
 
-    // Getters and Setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 

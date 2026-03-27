@@ -25,42 +25,6 @@ public class UserServiceImpl implements UserService {
         this.passwordEncoder = passwordEncoder;
 }
 
-    // @Override
-    // public UserResponseDTO createUser(UserRequestDTO userIn) {
-    //     User user = userMapper.toEntity(userIn);
-    //     String encodedPassword = passwordEncoder.encode(user.getPassword());
-    //     user.setPassword(encodedPassword);
-    //     userRepository.save(user);        
-    //     return userMapper.toResponseDTO(user);
-    // }
-
-//     @Override
-// public UserResponseDTO createUser(UserRequestDTO userIn) {
-//     System.out.println("Received DTO: " + userIn);
-//     try {
-//         User user = userMapper.toEntity(userIn);
-//         System.out.println("Mapped entity: " + user);
-
-//         if (user.getPassword() == null) {
-//             throw new RuntimeException("Password is null!");
-//         }
-
-//         String encodedPassword = passwordEncoder.encode(user.getPassword());
-//         System.out.println("Encoded password: " + encodedPassword);
-//         user.setPassword(encodedPassword);
-
-//         User savedUser = userRepository.save(user);
-//         System.out.println("Saved user: " + savedUser);
-
-//         return userMapper.toResponseDTO(savedUser);
-
-//     } catch (Exception e) {
-//         System.err.println("Exception during createUser: " + e);
-//         e.printStackTrace();
-//         throw e;
-//     }
-// }
-
     public UserResponseDTO createUser(UserRequestDTO userDTO) {
         User user = new User();
         user.setEmail(userDTO.getEmail());
@@ -106,7 +70,7 @@ public class UserServiceImpl implements UserService {
         throw new RuntimeException("Invalid password");
     }
 
-    return user; // valid login
+    return user; 
 }
 
 }
